@@ -1,6 +1,10 @@
 <?php
 
+use App\Http\Livewire\Notes\Notes;
+use App\Http\Livewire\Events\Events;
 use Illuminate\Support\Facades\Route;
+use App\Http\Livewire\Contacts\Contacts;
+use App\Http\Livewire\Companies\Companies;
 
 /*
 |--------------------------------------------------------------------------
@@ -14,7 +18,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('auth.login');
 });
 
 Route::middleware([
@@ -25,4 +29,9 @@ Route::middleware([
     Route::get('/dashboard', function () {
         return view('dashboard');
     })->name('dashboard');
+
+    Route::get('/contacts', Contacts::class)->name('contacts');
+    Route::get('/companies', Companies::class)->name('companies');
+    Route::get('/events', Events::class)->name('events');
+    Route::get('/notes', Notes::class)->name('notes');
 });
