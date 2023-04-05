@@ -8,23 +8,6 @@
                 <span
                     class="self-center text-xl font-semibold sm:text-2xl whitespace-nowrap dark:text-white">ICS-Notes</span>
             </div>
-            <div class="h-16 w-full flex items-center">
-                <img class="h-7 w-7 rounded-full object-cover" src="{{ Auth::user()->profile_photo_url }}"
-                    alt="{{ Auth::user()->name }}" />
-                <span
-                    class="ml-3 self-center text-sm font-semibold sm:text-sm whitespace-nowrap dark:text-white">{{ Auth::user()->name }}</span>
-            </div>
-            <div class="bottom-0">
-                <div class="relative">
-                    <div class="text-gray-300 absolute ml-4 inset-0 m-auto w-4 h-4">
-                        <img src="https://tuk-cdn.s3.amazonaws.com/can-uploader/light_with_icons_at_bottom-svg2.svg"
-                            alt="Search">
-                    </div>
-                    <input
-                        class="bg-gray-700 focus:outline-none focus:ring-1 focus:ring-gray-100 rounded w-full text-sm text-gray-300 placeholder-gray-400 pl-10 py-2"
-                        type="text" placeholder="Search" />
-                </div>
-            </div>
             <ul class="mt-5">
                 <li
                     class="flex w-full justify-between text-gray-400 hover:text-gray-300 cursor-pointer items-center mb-6">
@@ -86,6 +69,77 @@
                     </a>
                 </li>
             </ul>
+            <div class="bottom-0">
+                <div class="relative">
+                    <div class="text-gray-300 absolute ml-4 inset-0 m-auto w-4 h-4">
+                        <img src="https://tuk-cdn.s3.amazonaws.com/can-uploader/light_with_icons_at_bottom-svg2.svg"
+                            alt="Search">
+                    </div>
+                    <input
+                        class="bg-gray-700 focus:outline-none focus:ring-1 focus:ring-gray-100 rounded w-full text-sm text-gray-300 placeholder-gray-400 pl-10 py-2"
+                        type="text" placeholder="Search" />
+                </div>
+            </div>
+            <div class="h-16 w-full flex items-center">
+                <div class="relative">
+                    <x-dropdown align="top" width="48">
+                        <x-slot name="trigger">
+                            @if (Laravel\Jetstream\Jetstream::managesProfilePhotos())
+                                <button
+                                    class="flex text-sm border-2 border-transparent rounded-full focus:outline-none focus:border-gray-300 transition">
+                                    <img class="h-8 w-8 rounded-full object-cover"
+                                        src="{{ Auth::user()->profile_photo_url }}"
+                                        alt="{{ Auth::user()->name }}" />
+                                </button>
+                            @else
+                                <span class="inline-flex rounded-md">
+                                    <button type="button"
+                                        class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-gray-500 bg-white hover:text-gray-700 focus:outline-none focus:bg-gray-50 active:bg-gray-50 transition ease-in-out duration-150">
+                                        {{ Auth::user()->name }}
+
+                                        <svg class="ml-2 -mr-0.5 h-4 w-4" xmlns="http://www.w3.org/2000/svg"
+                                            fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                                            stroke="currentColor">
+                                            <path stroke-linecap="round" stroke-linejoin="round"
+                                                d="M19.5 8.25l-7.5 7.5-7.5-7.5" />
+                                        </svg>
+                                    </button>
+                                </span>
+                            @endif
+                        </x-slot>
+
+                        <x-slot name="content">
+                            <!-- Account Management -->
+                            <div class="block px-4 py-2 text-xs text-gray-400">
+                                {{ __('Manage Account') }}
+                            </div>
+
+                            <x-dropdown-link href="{{ route('profile.show') }}">
+                                {{ __('Profile') }}
+                            </x-dropdown-link>
+
+                            @if (Laravel\Jetstream\Jetstream::hasApiFeatures())
+                                <x-dropdown-link href="{{ route('api-tokens.index') }}">
+                                    {{ __('API Tokens') }}
+                                </x-dropdown-link>
+                            @endif
+
+                            <div class="border-t border-gray-200"></div>
+
+                            <!-- Authentication -->
+                            <form method="POST" action="{{ route('logout') }}" x-data>
+                                @csrf
+
+                                <x-dropdown-link href="{{ route('logout') }}" @click.prevent="$root.submit();">
+                                    {{ __('Log Out') }}
+                                </x-dropdown-link>
+                            </form>
+                        </x-slot>
+                    </x-dropdown>
+                </div>
+                <span
+                    class="ml-3 self-center text-sm font-semibold sm:text-sm whitespace-nowrap dark:text-white">{{ Auth::user()->name }}</span>
+            </div>
         </div>
         <div class="absolute inset-x-0 bottom-0 h-16 px-8 border-t border-gray-700">
             <ul class="w-full flex items-center justify-between bg-gray-800">
@@ -108,13 +162,6 @@
                         class="focus:outline-none focus:ring-2 rounded focus:ring-gray-300">
                         <img src="https://tuk-cdn.s3.amazonaws.com/can-uploader/light_with_icons_at_bottom-svg5.svg"
                             alt="settings">
-                    </button>
-                </li>
-                <li class="cursor-pointer text-white pt-5 pb-3" method="POST" action="{{ route('logout') }}">
-                    @csrf
-                    <button aria-label="open logs" class="focus:outline-none focus:ring-2 rounded focus:ring-gray-300"
-                        href="{{ route('logout') }}" @click.prevent="$root.submit();">
-                        <i class="fa-sharp fa-regular fa-arrow-right-from-bracket fa-2xs"></i>
                     </button>
                 </li>
             </ul>

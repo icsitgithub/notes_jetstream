@@ -15,14 +15,21 @@ class Notes extends Component
     public $title, $body, $note_id;
     public $isOpen = 0;
 
-    // public $companies;
-    // public $contacts;
-    // public $company_id = NULL;
+    public $companies, $contacts;
+    public $company_id, $event_id,$contact_id;
 
-    // public function mount(){
-    //     $this->companies = Company::orderBy('company_name');
-    //     $this->contacts = collect();
-    // }
+    public function mount()
+    {
+        $this->companies = Company::orderBy('company_name')->get();
+        $this->contacts = collect();
+    }
+
+    public function updatedCompanyId($companies)
+    {
+        if (!is_null($companies)) {
+            $this->contacts = Contact::where('company_id', $companies)->get();
+        }
+    }
 
     /**
      * The attributes that are mass assignable.
@@ -43,9 +50,6 @@ class Notes extends Component
      */
     public function create()
     {
-        $this->events = Event::orderBy('event_name')->get();
-        $this->companies = Company::orderBy('company_name')->get();
-        $this->contacts = Contact::orderBy('contact_name')->get();
         $this->resetInputFields();
         $this->openModal();
     }
