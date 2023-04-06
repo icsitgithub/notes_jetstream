@@ -15,7 +15,7 @@ class Notes extends Component
     public $title, $body, $note_id;
     public $isOpen = 0;
 
-    public $companies, $contacts;
+    public $companies, $contacts, $search;
     public $company_id, $event_id,$contact_id;
 
     public function mount()
@@ -39,7 +39,7 @@ class Notes extends Component
     public function render()
     {
         return view('livewire.notes.notes', [
-            'notes' => Note::where('user_id', auth()->user()->id)->orderBy('created_at', 'DESC')->paginate(8)
+            'notes' => Note::where('user_id', auth()->user()->id)->orderBy('created_at', 'DESC')->filter(request(['search']))->paginate(20)
         ]);
     }
 
@@ -54,12 +54,6 @@ class Notes extends Component
         $this->openModal();
     }
 
-    // public function updateCompanyId($company)
-    // {
-    //     if (!is_null($company)){
-    //         $this->contacts = Contact::where('company_id', $company)->get();
-    //     }
-    // }
 
     /**
      * The attributes that are mass assignable.

@@ -1,13 +1,16 @@
 <?php
 namespace App\Http\Livewire\Events;
 
+use Livewire\WithPagination;
 use Livewire\Component;
 use App\Models\Event;
 
 class Events extends Component
 {
+    use WithPagination;
     public $event_name, $event_id;
     public $isOpen = 0;
+
     /**
      * The attributes that are mass assignable.
      *
@@ -17,9 +20,10 @@ class Events extends Component
     {
         // $this->events = Event::all();
         return view('livewire.events.events',[
-            'events' => Event::orderBy('created_at', 'DESC')->paginate(8)
+            'events' => Event::orderBy('created_at', 'DESC')->filter(request(['search']))->paginate(8)
         ]);
     }
+
     /**
      * The attributes that are mass assignable.
      *
@@ -56,6 +60,27 @@ class Events extends Component
     private function resetInputFields(){
         $this->event_name = '';
         $this->event_id = '';
+    }
+
+    /**
+     * The attributes that are mass assignable.
+     *
+     * @var array
+     */
+    public function store()
+    {
+        $this->validate([
+            'event_name' => 'required',
+        ]);
+   
+        Event::updateOrCreate(['id' => $this->event_id], [
+            'event_name' => $this->event_name
+        ]);
+  
+        session()->flash('message', 
+            $this->event_id ? 'Event Updated Successfully.' : 'Event Created Successfully.');
+        $this->closeModal();
+        $this->resetInputFields();
     }
     
     /**

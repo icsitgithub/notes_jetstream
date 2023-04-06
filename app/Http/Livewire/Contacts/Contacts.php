@@ -1,12 +1,11 @@
 <?php
-
 namespace App\Http\Livewire\Contacts;
 
 use Livewire\WithPagination;
 use Livewire\Component;
-use App\Models\Company;
+use App\Models\Event;
 use App\Models\Contact;
-use Illuminate\Http\Request;
+use App\Models\Company;
 
 class Contacts extends Component
 {
@@ -21,10 +20,12 @@ class Contacts extends Component
     */
     public function render()
     {
-        return view('livewire.contacts.contacts', [
-            'contacts' => Contact::with('company')->orderBy('contact_name')->paginate(9),
+        // $this->events = Event::all();
+        return view('livewire.contacts.contacts',[
+            'contacts' => Contact::orderBy('created_at', 'DESC')->filter(request(['search']))->paginate(15)
         ]);
     }
+
     /**
      * The attributes that are mass assignable.
      *
@@ -36,6 +37,7 @@ class Contacts extends Component
         $this->resetInputFields();
         $this->openModal();
     }
+
     /**
      * The attributes that are mass assignable.
      *
@@ -45,6 +47,7 @@ class Contacts extends Component
     {
         $this->isOpen = true;
     }
+
     /**
      * The attributes that are mass assignable.
      *
@@ -54,6 +57,7 @@ class Contacts extends Component
     {
         $this->isOpen = false;
     }
+
     /**
      * The attributes that are mass assignable.
      *
@@ -67,6 +71,7 @@ class Contacts extends Component
         $this->phone_number = '';
         $this->email = '';
     }
+    
     /**
      * The attributes that are mass assignable.
      *
@@ -97,6 +102,7 @@ class Contacts extends Component
         $this->closeModal();
         $this->resetInputFields();
     }
+    
     /**
      * The attributes that are mass assignable.
      *
@@ -122,7 +128,7 @@ class Contacts extends Component
      */
     public function delete($id)
     {
-        Contact::find($id)->delete();
-        session()->flash('message', 'Product Deleted Successfully.');
+        Event::find($id)->delete();
+        session()->flash('message', 'Contact Deleted Successfully.');
     }
 }
