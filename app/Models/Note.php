@@ -31,4 +31,27 @@ class Note extends Model
     {
         return $this->belongsTo(Contact::class);
     }
+
+    public function company(): BelongsTo
+    {
+        return $this->belongsTo(company::class);
+    }
+    
+    public function scopeFilter($query, array $filters){
+        $query->when($filters['search'] ?? false, function($query, $search){
+            return $query->where(function($query) use ($search){
+                return $query->where('title', 'like', '%'.$search.'%')
+                            ->orWhere('body', 'like', '%'.$search.'%')
+                            ->orWhereHas('company', function($query) use ($search){
+                                return $query->where('company_name', 'like', '%'.$search.'%');
+                            })->with('company')
+                            ->orWhereHas('event', function($query) use ($search){
+                                return $query->where('event_name', 'like', '%'.$search.'%');
+                            })->with('event')
+                            ->orWhereHas('contact', function($query) use ($search){
+                                return $query->where('contact_name', 'like', '%'.$search.'%');
+                            })->with('contact');
+            });
+        });
+    }
 }

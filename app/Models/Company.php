@@ -21,4 +21,14 @@ class Company extends Model
     {
         return $this->hasMany(Contact::class);
     }
+
+    public function scopeFilter($query, array $filters){
+        $query->when($filters['search'] ?? false, function($query, $search){
+            return $query->where(function($query) use ($search){
+                return $query->where('company_name', 'like', '%'.$search.'%')
+                            ->orWhere('company_country', 'like', '%'.$search.'%')
+                            ->orWhere('agent_type', 'like', '%'.$search.'%');
+            });
+        });
+    }
 }

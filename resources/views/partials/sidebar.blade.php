@@ -69,17 +69,6 @@
                     </a>
                 </li>
             </ul>
-            <div class="bottom-0">
-                <div class="relative">
-                    <div class="text-gray-300 absolute ml-4 inset-0 m-auto w-4 h-4">
-                        <img src="https://tuk-cdn.s3.amazonaws.com/can-uploader/light_with_icons_at_bottom-svg2.svg"
-                            alt="Search">
-                    </div>
-                    <input
-                        class="bg-gray-700 focus:outline-none focus:ring-1 focus:ring-gray-100 rounded w-full text-sm text-gray-300 placeholder-gray-400 pl-10 py-2"
-                        type="text" placeholder="Search" />
-                </div>
-            </div>
             <div class="h-16 w-full flex items-center">
                 <div class="relative">
                     <x-dropdown align="top" width="48">
