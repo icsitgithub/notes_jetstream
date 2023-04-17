@@ -42,9 +42,9 @@ class Note extends Model
             return $query->where(function($query) use ($search){
                 return $query->where('title', 'like', '%'.$search.'%')
                             ->orWhere('body', 'like', '%'.$search.'%')
-                            ->orWhereHas('company', function($query) use ($search){
-                                return $query->where('company_name', 'like', '%'.$search.'%');
-                            })->with('company')
+                            // ->orWhereHas('company', function($query) use ($search){
+                            //     return $query->where('company_name', 'like', '%'.$search.'%');
+                            // })->with('company')
                             ->orWhereHas('event', function($query) use ($search){
                                 return $query->where('event_name', 'like', '%'.$search.'%');
                             })->with('event')

@@ -104,6 +104,6 @@ class Events extends Component
     public function delete($id)
     {
         Event::find($id)->delete();
-        session()->flash('message', 'Product Deleted Successfully.');
+        session()->flash('message', 'Event Deleted Successfully.');
     }
 }

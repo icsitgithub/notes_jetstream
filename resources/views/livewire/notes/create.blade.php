@@ -64,7 +64,7 @@
                             <label for="body" class="block text-gray-700 text-sm font-bold mb-2">Note</label>
                             <input
                                 class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                                type="hidden" name="content" id="body">
+                                type="hidden" name="content" id="body" value="{{ $this->body }}">
                             <trix-editor input="body"></trix-editor>
                             @error('body')
                                 <span class="text-red-500">{{ $message }}</span>

@@ -1,6 +1,7 @@
 <?php
 namespace App\Http\Livewire\Notes;
 
+use App\Mail\SendMail;
 use Livewire\WithPagination;
 use Livewire\Component;
 use App\Models\Note;
@@ -8,6 +9,7 @@ use App\Models\Event;
 use App\Models\Contact;
 use App\Models\Company;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
 
 class Notes extends Component
 {
@@ -39,7 +41,7 @@ class Notes extends Component
     public function render()
     {
         return view('livewire.notes.notes', [
-            'notes' => Note::where('user_id', auth()->user()->id)->orderBy('created_at', 'DESC')->filter(request(['search']))->paginate(20)
+            'notes' => Note::where('user_id', auth()->user()->id)->orderBy('created_at', 'DESC')->filter(request(['search']))->paginate(10)
         ]);
     }
 
@@ -124,6 +126,7 @@ class Notes extends Component
     public function edit($id)
     {
         $note = Note::findOrFail($id);
+        // dd($note);
         $this->events = Event::orderBy('event_name')->get();
         $this->contacts = Contact::orderBy('contact_name')->get();
         $this->companies = Company::orderBy('company_name')->get();
@@ -136,6 +139,18 @@ class Notes extends Component
     
         $this->openModal();
     }
+
+    public function SendMail($id)
+    {
+        $note = Note::findOrFail($id);
+
+        Mail::to('riskiandrean31@gmail.com')->send(new SendMail($note));
+           
+        $this->openModal();
+        session()->flash('message', 'Note Shared Successfully.');
+        // dd("Email is sent successfully.");
+    }
+
      /**
      * The attributes that are mass assignable.
      *
