@@ -1,11 +1,16 @@
 <?php
 
-use Illuminate\Support\Facades\Route;
 use App\Http\Livewire\Notes\Notes;
+use App\Http\Livewire\Show\ByEvent;
 use App\Http\Livewire\Events\Events;
+use App\Http\Livewire\Show\ByCompany;
+use App\Http\Livewire\Show\ByContact;
+use Illuminate\Support\Facades\Route;
 use App\Http\Livewire\Contacts\Contacts;
+use App\Http\Livewire\Notes\FormSendMail;
 use App\Http\Livewire\Companies\Companies;
 use App\Http\Livewire\Notes\FormInputNote;
+use App\Http\Controllers\SendMailController;
 use App\Http\Livewire\Notes\FormInputEventNote;
 use App\Http\Livewire\Notes\FormInputCompanyNote;
 use App\Http\Livewire\Notes\FormInputContactNote;
@@ -45,4 +50,10 @@ Route::middleware([
     Route::get('/formInputEventNote', FormInputEventNote::class)->name('formInputEventNotes');
     Route::get('/formInputCompanyNote', FormInputCompanyNote::class)->name('formInputCompanyNotes');
     Route::get('/formInputContactNote', FormInputContactNote::class)->name('formInputContactNotes');
+    Route::get('/formSendMail/{id}', FormSendMail::class)->name('formSendMails');
+
+    /* Route untuk proses show note berdasarkan (company, contact, event) */
+    Route::get('/showNoteByCompany/{id}', ByCompany::class)->name('showByCompany');
+    Route::get('/showNoteByContact/{id}', ByContact::class)->name('showByContact');
+    Route::get('/showNoteByEvent/{id}', ByEvent::class)->name('showByEvent');
 });

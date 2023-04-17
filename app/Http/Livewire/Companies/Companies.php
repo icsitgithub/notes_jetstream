@@ -21,7 +21,7 @@ class Companies extends Component
     {
         // $this->companies = Company::all()->sortBy('company_name');
         return view('livewire.companies.companies', [
-            'companies' => Company::orderBy('company_name')->filter(request(['search']))->paginate(9),
+            'companies' => Company::orderBy('company_name')->filter(request(['search']))->paginate(12),
         ]);
     }
     /**

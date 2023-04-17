@@ -2,7 +2,7 @@
     <div class="mx-auto sm:px-6 lg:px-8">
         <x-slot name="header">
             <h1 class="font-semibold text-xl text-gray-800 leading-tight">
-                {{ __('Note Lists') }}
+                {{  __('Note Lists') }}
             </h1>
         </x-slot>
         @if (session()->has('message'))
@@ -40,20 +40,10 @@
                     <span class="sr-only">Search</span>
                 </button>
             </form>
-
-            <a href="/formInputNote" class="ml-4">
-                <button type="button"
-                    class="inline items-center px-4 py-2 my-3 bg-black border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-gray-700 active:bg-gray-900 focus:outline-none focus:border-gray-900 focus:shadow-outline-gray disabled:opacity-25 transition ease-in-out duration-150">
-                    Create New Note
-                </button>
-            </a>
-            @if ($isOpen)
-                @include('livewire.notes.create')
-            @endif
         </div>
 
         @foreach ($notes as $note)
-            <div class="max-w mb-5">
+            <div class="max-w mt-3 mb-5">
                 <div
                     class="divide-y divide-gray-100 overflow-hidden rounded-lg border border-gray-200 bg-white shadow-sm">
                     <details class="group" open>
@@ -102,7 +92,7 @@
         @endforeach
         <nav class="mt-3" aria-label="Page navigation example">
             <ul class="flex-col -space-x-px">
-                {{ $notes->links() }}
+                {{-- {{ $notes->links() }} --}}
             </ul>
         </nav>
     </div>

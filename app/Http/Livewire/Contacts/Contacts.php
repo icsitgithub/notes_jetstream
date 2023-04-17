@@ -22,7 +22,7 @@ class Contacts extends Component
     {
         // $this->events = Event::all();
         return view('livewire.contacts.contacts',[
-            'contacts' => Contact::orderBy('created_at', 'DESC')->filter(request(['search']))->paginate(15)
+            'contacts' => Contact::orderBy('created_at', 'DESC')->filter(request(['search']))->paginate(16)
         ]);
     }
 

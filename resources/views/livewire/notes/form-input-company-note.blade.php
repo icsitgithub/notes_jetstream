@@ -33,8 +33,10 @@
                     <select wire:model="agent_type" placeholder="Choose Agent Type"
                         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-black focus:border-black block w-full p-2.5 dark:text-black dark:focus:ring-black dark:focus:border-black">
                         <option value="" selected>Select Option</option>
-                        <option value="Travel Agent">Travel Agent</option>
-                        <option value="Tour Operator">Tour Operator</option>
+                        <option value="TA">Travel Agent</option>
+                        <option value="TO">Tour Operator</option>
+                        <option value="TO - Virtuoso">TO - Virtuoso</option>
+                        <option value="ON CHECK">ON CHECK</option>
                     </select>
 
                 </div>

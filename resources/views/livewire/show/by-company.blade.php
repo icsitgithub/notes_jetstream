@@ -6,14 +6,31 @@
             </h1>
         </x-slot>
         @if (session()->has('message'))
-            <div class="bg-teal-100 border-t-4 border-teal-500 rounded-b text-teal-900 px-4 py-3 shadow-md my-3"
+            <div class="space-y-5">
+                <div
+                    class="relative mx-auto max-w-[400px] rounded-xl border border-secondary-50 bg-white p-4 text-sm shadow-lg">
+                    <button class="absolute top-4 right-4 ml-auto text-secondary-500 hover:text-secondary-900">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="h-5 w-5">
+                            <path
+                                d="M6.28 5.22a.75.75 0 00-1.06 1.06L8.94 10l-3.72 3.72a.75.75 0 101.06 1.06L10 11.06l3.72 3.72a.75.75 0 101.06-1.06L11.06 10l3.72-3.72a.75.75 0 00-1.06-1.06L10 8.94 6.28 5.22z" />
+                        </svg>
+                    </button>
+                    <div class="flex space-x-4">
+                        <div class="flex-1">
+                            <h4 class="pr-6 font-medium text-secondary-900">{{ session('message') }}</h4>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            {{-- <div class="bg-teal-100 border-t-4 border-teal-500 rounded-b text-teal-900 px-4 py-3 shadow-md my-3"
                 role="alert">
                 <div class="flex">
                     <div>
                         <p class="text-sm">{{ session('message') }}</p>
                     </div>
                 </div>
-            </div>
+            </div> --}}
         @endif
         <div class="mt-3 flex justify-between">
             <form class="flex items-center">
@@ -40,20 +57,10 @@
                     <span class="sr-only">Search</span>
                 </button>
             </form>
-
-            <a href="/formInputNote" class="ml-4">
-                <button type="button"
-                    class="inline items-center px-4 py-2 my-3 bg-black border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-gray-700 active:bg-gray-900 focus:outline-none focus:border-gray-900 focus:shadow-outline-gray disabled:opacity-25 transition ease-in-out duration-150">
-                    Create New Note
-                </button>
-            </a>
-            @if ($isOpen)
-                @include('livewire.notes.create')
-            @endif
         </div>
 
         @foreach ($notes as $note)
-            <div class="max-w mb-5">
+            <div class="max-w mt-3 mb-5">
                 <div
                     class="divide-y divide-gray-100 overflow-hidden rounded-lg border border-gray-200 bg-white shadow-sm">
                     <details class="group" open>
@@ -100,11 +107,11 @@
                 </div>
             </div>
         @endforeach
-        <nav class="mt-3" aria-label="Page navigation example">
+        {{-- <nav class="mt-3" aria-label="Page navigation example">
             <ul class="flex-col -space-x-px">
                 {{ $notes->links() }}
             </ul>
-        </nav>
+        </nav> --}}
     </div>
 </div>
 <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
