@@ -14,25 +14,19 @@
                     </div>
                 </div>
             </div> --}}
-            <div id="toast-top-right"
-                class="fixed flex items-center w-full max-w-xs p-4 rounded-lg top-5 right-5"
-                role="alert">
-                <div id="toast-default"
-                    class="flex items-center w-full max-w-xs p-4 text-teal-500 bg-white rounded-lg shadow dark:text-teal-600 dark:bg-teal-200"
-                    role="alert">
-                    <div class="ml-3 text-sm font-normal">{{ session('message') }}</div>
-                    <button type="button"
-                        class="ml-auto -mx-1.5 -my-1.5 bg-teal-100 text-teal-900 hover:text-teal-100 rounded-lg focus:ring-2 focus:ring-teal-300 p-1.5 hover:bg-teal-100 inline-flex h-8 w-8 dark:text-teal-600 dark:hover:text-white dark:bg-teal-300 dark:hover:bg-teal-200"
-                        data-dismiss-target="#toast-default" aria-label="Close">
-                        <span class="sr-only">Close</span>
-                        <svg aria-hidden="true" class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"
-                            xmlns="http://www.w3.org/2000/svg">
-                            <path fill-rule="evenodd"
-                                d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
-                                clip-rule="evenodd"></path>
-                        </svg>
-                    </button>
-                </div>
+            <div
+                class="px-6 py-4 border-0 rounded relative mb-4 bg-teal-100 border-t-4 border-teal-500 rounded-b text-teal-900">
+                <span class="text-xl inline-block mr-5 align-middle">
+                    <i class="fas fa-bell"></i>
+                </span>
+                <span class="inline-block align-middle mr-8">
+                    <b class="capitalize">pink!</b> This is a pink alert - check it out!
+                </span>
+                <button
+                    class="absolute bg-transparent text-2xl font-semibold leading-none right-0 top-0 mt-4 mr-6 outline-none focus:outline-none"
+                    onclick="closeAlert(event)">
+                    <span>×</span>
+                </button>
             </div>
         @endif
         <div class="mt-3 flex justify-between">
@@ -116,3 +110,12 @@
         </nav>
     </div>
 </div>
+<script>
+    function closeAlert(event) {
+        let element = event.target;
+        while (element.nodeName !== "BUTTON") {
+            element = element.parentNode;
+        }
+        element.parentNode.parentNode.removeChild(element.parentNode);
+    }
+</script>
