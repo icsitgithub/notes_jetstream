@@ -4,11 +4,12 @@ namespace App\Http\Livewire\Events;
 use Livewire\WithPagination;
 use Livewire\Component;
 use App\Models\Event;
+use App\Models\User;
 
 class Events extends Component
 {
     use WithPagination;
-    public $event_name, $event_id;
+    public $event_name, $event_id, $user_id;
     public $isOpen = 0;
 
     /**
@@ -19,6 +20,7 @@ class Events extends Component
     public function render()
     {
         // $this->events = Event::all();
+        // dd(auth()->user()->id);
         return view('livewire.events.events',[
             'events' => Event::orderBy('created_at', 'DESC')->filter(request(['search']))->paginate(8)
         ]);
@@ -58,6 +60,7 @@ class Events extends Component
      * @var array
      */
     private function resetInputFields(){
+        $this->user_id = '';
         $this->event_name = '';
         $this->event_id = '';
     }
@@ -72,11 +75,12 @@ class Events extends Component
         $this->validate([
             'event_name' => 'required',
         ]);
-   
+
         Event::updateOrCreate(['id' => $this->event_id], [
+            'user_id' => $this->user = auth()->user()->id,
             'event_name' => $this->event_name
         ]);
-  
+
         session()->flash('message', 
             $this->event_id ? 'Event Updated Successfully.' : 'Event Created Successfully.');
         $this->closeModal();
@@ -90,9 +94,9 @@ class Events extends Component
      */
     public function edit($id)
     {
-        $product = Event::findOrFail($id);
+        $event = Event::findOrFail($id);
         $this->event_id = $id;
-        $this->event_name = $product->event_name;
+        $this->event_name = $event->event_name;
     
         $this->openModal();
     }
