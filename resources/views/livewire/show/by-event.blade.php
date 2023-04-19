@@ -2,7 +2,7 @@
     <div class="mx-auto sm:px-6 lg:px-8">
         <x-slot name="header">
             <h1 class="font-semibold text-xl text-gray-800 leading-tight">
-                {{  __('Note Lists') }}
+                {{ __('Note Lists') }}
             </h1>
         </x-slot>
         @if (session()->has('message'))
@@ -41,7 +41,9 @@
                 </button>
             </form>
         </div>
-
+        @if ($isOpen)
+            @include('livewire.notes.create')
+        @endif
         @foreach ($notes as $note)
             <div class="max-w mt-3 mb-5">
                 <div
@@ -63,11 +65,14 @@
                         </summary>
                         <div class="border-t border-t-gray-100 p-4 text-secondary-500">{!! $note->body !!}</div>
                         <div class="p-2 group-open:bg-gray-50">
-                            Company : 
-                            <a href="/showNoteByCompany/{{ $note->contact->company_id }}">{{ $note->contact->company->company_name }}</a> |
-                            Contact Name : 
-                            <a href="/showNoteByContact/{{ $note->contact_id }}">{{ $note->contact->contact_name }}</a> |
-                            Event : 
+                            Company :
+                            <a
+                                href="/showNoteByCompany/{{ $note->contact->company_id }}">{{ $note->contact->company->company_name }}</a>
+                            |
+                            Contact Name :
+                            <a href="/showNoteByContact/{{ $note->contact_id }}">{{ $note->contact->contact_name }}</a>
+                            |
+                            Event :
                             <a href="/showNoteByEvent/{{ $note->event_id }}">{{ $note->event->event_name }}</a>
                             <div class="flex flex-row-reverse">
                                 <a href="/formSendMail/{{ $note->id }}">
@@ -92,7 +97,7 @@
         @endforeach
         <nav class="mt-3" aria-label="Page navigation example">
             <ul class="flex-col -space-x-px">
-                {{-- {{ $notes->links() }} --}}
+                {{ $notes->links() }}
             </ul>
         </nav>
     </div>

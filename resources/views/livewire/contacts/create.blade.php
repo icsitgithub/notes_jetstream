@@ -13,15 +13,28 @@
             <form>
                 <div class="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
                     <div class="">
-                        <label for="company_id"
-                            class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-700">Company</label>
-                        <select wire:model="company_id" placeholder="Choose Agent Type"
-                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-black focus:border-black block w-full p-2.5 dark:text-black dark:focus:ring-black dark:focus:border-black">
-                            <option value="" selected disabled>Select Company</option>
-                            @foreach ($companies as $company)
-                                <option value="{{ $company->id }}">{{ $company->company_name }}</option>
-                            @endforeach
-                        </select>
+                        <div>
+                            <label for="company_id"
+                                class="block text-gray-700 text-sm font-bold mb-2">Company</label>
+                            <select wire:model="company_id" placeholder="Choose Agent Type"
+                                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-black focus:border-black block w-full p-2.5 dark:text-black dark:focus:ring-black dark:focus:border-black">
+                                <option value="" selected disabled>Select Company</option>
+                                @foreach ($companies as $company)
+                                    <option value="{{ $company->id }}">{{ $company->company_name }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+
+                        {{-- <div class="mt-4">
+                            <label for="contact_pp" class="text-gray-700 text-sm font-bold">Contact
+                                Profile Picture :</label>
+                            <label class="text-sm font-medium text-gray-900 dark:text-white"
+                                for="contact_pp">Upload file</label>
+                            <input
+                                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-black focus:border-black block w-full p-2.5 dark:text-black dark:focus:ring-black dark:focus:border-black"
+                                id="contact_pp" type="file" wire:model="contact_pp">
+                        </div> --}}
+
                         <div class="mt-4 mb-4">
                             <label for="contact_name" class="block text-gray-700 text-sm font-bold mb-2">Contact
                                 Name :</label>

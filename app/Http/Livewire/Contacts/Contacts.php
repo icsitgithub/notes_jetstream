@@ -2,6 +2,7 @@
 namespace App\Http\Livewire\Contacts;
 
 use Livewire\WithPagination;
+use Livewire\WithFileUploads;
 use Livewire\Component;
 use App\Models\Event;
 use App\Models\Contact;
@@ -10,7 +11,8 @@ use App\Models\Company;
 class Contacts extends Component
 {
     use WithPagination;
-    public $contact_name, $title, $phone_number, $email, $contact_id;
+    use WithFileUploads;
+    public $contact_name, $title, $phone_number, $email, $contact_id, $photo;
     public $isOpen = 0;
 
     /**
@@ -22,7 +24,7 @@ class Contacts extends Component
     {
         // $this->events = Event::all();
         return view('livewire.contacts.contacts',[
-            'contacts' => Contact::orderBy('created_at', 'DESC')->filter(request(['search']))->paginate(16)
+            'contacts' => Contact::orderBy('created_at', 'DESC')->filter(request(['search']))->paginate(12)
         ]);
     }
 

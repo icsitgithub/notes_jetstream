@@ -107,11 +107,11 @@
                 </div>
             </div>
         @endforeach
-        {{-- <nav class="mt-3" aria-label="Page navigation example">
+        <nav class="mt-3" aria-label="Page navigation example">
             <ul class="flex-col -space-x-px">
                 {{ $notes->links() }}
             </ul>
-        </nav> --}}
+        </nav>
     </div>
 </div>
 <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>

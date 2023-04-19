@@ -11,7 +11,7 @@
                     <i class="fas fa-bell"></i>
                 </span>
                 <span class="inline-block align-middle mr-8">
-                    <b class="capitalize">pink!</b> This is a pink alert - check it out!
+                    {{ session('message') }}
                 </span>
                 <button
                     class="absolute bg-transparent text-2xl font-semibold leading-none right-0 top-0 mt-4 mr-6 outline-none focus:outline-none"
@@ -20,9 +20,9 @@
                 </button>
             </div>
         @endif
-        <div class="mt-3 flex justify-between">
+        <div class="mt-3 grid grid-cols-2">
             <form class="flex items-center">
-                <div class="relative w-64">
+                <div class="relative w-full">
                     <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
                         <svg aria-hidden="true" class="w-5 h-5 text-gray-500 dark:text-gray-400" fill="currentColor"
                             viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
@@ -46,12 +46,14 @@
                 </button>
             </form>
 
-            <a href="/formInputNote" class="ml-4">
-                <button type="button"
-                    class="inline items-center px-4 py-2 my-3 bg-black border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-gray-700 active:bg-gray-900 focus:outline-none focus:border-gray-900 focus:shadow-outline-gray disabled:opacity-25 transition ease-in-out duration-150">
-                    Create New Note
-                </button>
-            </a>
+            <div class="grid place-content-end">
+                <a href="/formInputNote">
+                    <button type="button"
+                        class="inline items-center px-4 py-2 my-3 bg-black border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-gray-700 active:bg-gray-900 focus:outline-none focus:border-gray-900 focus:shadow-outline-gray disabled:opacity-25 transition ease-in-out duration-150">
+                        Create New Note
+                    </button>
+                </a>
+            </div>
             @if ($isOpen)
                 @include('livewire.notes.create')
             @endif
