@@ -58,6 +58,7 @@ class Companies extends Component
      * @var array
      */
     private function resetInputFields(){
+        $this->user_id = '';
         $this->company_name = '';
         $this->company_country = '';
         $this->agent_type = '';
@@ -77,6 +78,7 @@ class Companies extends Component
         ]);
    
         Company::updateOrCreate(['id' => $this->company_id], [
+            'user_id' => $this->user = auth()->user()->id,
             'company_name' => $this->company_name,
             'company_country' => $this->company_country,
             'agent_type' => $this->agent_type,

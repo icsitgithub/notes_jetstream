@@ -9,19 +9,17 @@ use Livewire\Component;
 class ByCompany extends Component
 {
     use WithPagination;
-    public $title, $body, $note_id;
-    public $companies, $contacts, $search;
-    public $company_id, $event_id,$contact_id;
 
     public function mount($id)
     {
-        $notes = Note::where('company_id', $id)->orderBy('created_at', 'DESC')->filter(request(['search']))->get();
-        $this->notes = $notes;
-        // dd($notes);
+        $this->company_id = $id;
     }
 
     public function render()
     {
-        return view('livewire.show.by-company');
+        $notes = Note::where('company_id', $this->company_id)->orderBy('created_at', 'DESC')->filter(request(['search']))->paginate(10);
+        return view('livewire.show.by-company',[
+            'notes' => $notes
+        ]);
     }
 }
