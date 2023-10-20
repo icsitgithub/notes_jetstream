@@ -140,17 +140,6 @@ class Notes extends Component
         $this->openModal();
     }
 
-    public function SendMail($id)
-    {
-        $note = Note::findOrFail($id);
-
-        Mail::to('riskiandrean31@gmail.com')->send(new SendMail($note));
-           
-        $this->openModal();
-        session()->flash('message', 'Note Shared Successfully.');
-        // dd("Email is sent successfully.");
-    }
-
      /**
      * The attributes that are mass assignable.
      *

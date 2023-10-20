@@ -103,3 +103,42 @@
     </div>
 </div>
 <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/trix/1.3.1/trix.min.js"></script>
+<script>
+    $(document).ready(function() {
+        $('#company_id').on('change', function() {
+            var companyID = $(this).val();
+            // console.log(companyID);
+            if (companyID) {
+                $.ajax({
+                    url: '/notes/' + companyID,
+                    type: "GET",
+                    data: {
+                        "_token": "{{ csrf_token() }}"
+                    },
+                    dataType: "json",
+                    success: function(data) {
+                        // console.log(data);
+                        if (data) {
+                            $('#contact_id').empty();
+                            $('#contact_id').focus;
+                            $('#contact_id').append(
+                                '<option value="">-- Select Contact --</option>');
+                            $.each(data, function(key, value) {
+                                console.log(value);
+                                $('#contact_id').append(
+                                    '<option value="' +
+                                    value.id + '">' + value.contact_name +
+                                    '</option>');
+                            });
+                        } else {
+                            $('#contact_id').empty();
+                        }
+                    }
+                });
+            } else {
+                $('#contact_id').empty();
+            }
+        });
+    });
+</script>

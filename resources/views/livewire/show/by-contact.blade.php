@@ -58,7 +58,9 @@
                 </button>
             </form>
         </div>
-
+        @if ($isOpen)
+            @include('livewire.contacts.create')
+        @endif
         @foreach ($notes as $note)
             <div class="max-w mt-3 mb-5">
                 <div
@@ -80,11 +82,14 @@
                         </summary>
                         <div class="border-t border-t-gray-100 p-4 text-secondary-500">{!! $note->body !!}</div>
                         <div class="p-2 group-open:bg-gray-50">
-                            Company : 
-                            <a href="/showNoteByCompany/{{ $note->contact->company_id }}">{{ $note->contact->company->company_name }}</a> |
-                            Contact Name : 
-                            <a href="/showNoteByContact/{{ $note->contact_id }}">{{ $note->contact->contact_name }}</a> |
-                            Event : 
+                            Company :
+                            <a
+                                href="/showNoteByCompany/{{ $note->contact->company_id }}">{{ $note->contact->company->company_name }}</a>
+                            |
+                            Contact Name :
+                            <a href="/showNoteByContact/{{ $note->contact_id }}">{{ $note->contact->contact_name }}</a>
+                            |
+                            Event :
                             <a href="/showNoteByEvent/{{ $note->event_id }}">{{ $note->event->event_name }}</a>
                             <div class="flex flex-row-reverse">
                                 <a href="/formSendMail/{{ $note->id }}">
