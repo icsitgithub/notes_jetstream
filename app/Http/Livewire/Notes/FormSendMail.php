@@ -54,6 +54,7 @@ class FormSendMail extends Component
         // dd("Email is sent successfully.");
 
         $this->recipinet = '';
+        return redirect()->to('/notes');
     }
 
      /**
