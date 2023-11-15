@@ -2,7 +2,6 @@
 namespace App\Http\Livewire\Contacts;
 
 use Livewire\WithPagination;
-use Livewire\WithFileUploads;
 use Livewire\Component;
 use App\Models\Event;
 use App\Models\Contact;
@@ -11,7 +10,6 @@ use App\Models\Company;
 class Contacts extends Component
 {
     use WithPagination;
-    use WithFileUploads;
     public $contact_name, $title, $phone_number, $email, $contact_id, $photo;
     public $isOpen = 0;
 
@@ -99,7 +97,7 @@ class Contacts extends Component
         ]);
   
         session()->flash('message', 
-            $this->company_id ? 'Product Updated Successfully.' : 'Contact Created Successfully.');
+            $this->company_id ? 'Contact Updated Successfully.' : 'Contact Created Successfully.');
   
         $this->closeModal();
         $this->resetInputFields();
@@ -130,7 +128,7 @@ class Contacts extends Component
      */
     public function delete($id)
     {
-        Event::find($id)->delete();
+        Contact::find($id)->delete();
         session()->flash('message', 'Contact Deleted Successfully.');
     }
 }
