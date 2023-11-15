@@ -6,13 +6,18 @@
             </h1>
         </x-slot>
         @if (session()->has('message'))
-            <div class="bg-teal-100 border-t-4 border-teal-500 rounded-b text-teal-900 px-4 py-3 shadow-md my-3"
-                role="alert">
-                <div class="flex">
-                    <div>
-                        <p class="text-sm">{{ session('message') }}</p>
-                    </div>
-                </div>
+            <div class="px-6 py-4 border-0 rounded relative mb-4 bg-teal-100 border-t-4 border-teal-500 rounded-b text-teal-900">
+                <span class="text-xl inline-block mr-5 align-middle">
+                    <i class="fas fa-bell"></i>
+                </span>
+                <span class="inline-block align-middle mr-8">
+                    {{ session('message') }}
+                </span>
+                <button
+                    class="absolute bg-transparent text-2xl font-semibold leading-none right-0 top-0 mt-4 mr-6 outline-none focus:outline-none"
+                    onclick="closeAlert(event)">
+                    <span>×</span>
+                </button>
             </div>
         @endif
         <div class="mt-3 flex justify-between">

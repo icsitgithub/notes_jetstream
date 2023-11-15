@@ -12,7 +12,7 @@
                     <i class="fas fa-bell"></i>
                 </span>
                 <span class="inline-block align-middle mr-8">
-                    <b class="capitalize">pink!</b> This is a pink alert - check it out!
+                    {{ session('message') }}
                 </span>
                 <button
                     class="absolute bg-transparent text-2xl font-semibold leading-none right-0 top-0 mt-4 mr-6 outline-none focus:outline-none"
