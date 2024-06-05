@@ -61,9 +61,9 @@
             @foreach ($companies as $company)
                 <article class="w-auto max-w-sm h-fit px-4 py-3 rounded-md shadow-md bg-gray-50 border border-gray-800">
                     <div>
-                        <div class="flex flex-row mt-2">
+                        <div class="flex flex-row-reverse mt-2">
                             <span
-                                class="text-sm font-light text-gray-800 dark:text-gray-800">{{ $company->updated_at->format('Y-m-d') }}</span>
+                                class="text-sm font-light text-gray-800 dark:text-gray-800"> {{$company->edited_by? $company->editor->name : $company->user->name}} || {{ $company->updated_at->format('Y-m-d') }}</span>
                         </div>
                         <div>
                             <h1 class="mt-2 text-lg font-semibold text-gray-800 dark:text-black">
@@ -81,8 +81,8 @@
                             @endphp
                             <p class="font-normal text-gray-700 dark:text-black">
                                 <i class="fa-solid fa-pen-fancy"></i> Company Notes : 
+                                <span class="truncate">{!! strip_tags(Str::limit($company->company_notes, 50)) !!}</span>
                                 @if(strlen($company->company_notes) > 50)
-                                {{-- <span class="truncate">{!! strip_tags(Str::limit($company->company_notes, 50)) !!}</span> --}}
                                     <span class="read-more-show">More <i class="fa fa-angle-down"></i></span>
                                     <span class="read-more-content hidden" data-fulltext="{{ $cleaned_text }}"></span>
                                     <span class="read-more-less hidden">Less <i class="fa fa-angle-up"></i></span>

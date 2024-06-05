@@ -79,27 +79,19 @@ class Companies extends Component
             'company_name' => 'required',
             'company_country' => 'required',
             'agent_type' => 'required',
-            // 'business_source' => 'required',
+            'business_source' => 'required',
         ]);
-
-        $company = Company::find($this->company_id);
-
-        if ($company) {
-            // Jika company ada, gunakan user_id yang sudah ada di database
-            $userId = $company->user_id;
-        } else {
-            // Jika company tidak ada (membuat baru), gunakan user id dari auth
-            $userId = Auth::id();
-        }
    
         Company::updateOrCreate(['id' => $this->company_id], [
-            'user_id' => $this->userId,
             'company_name' => $this->company_name,
             'company_country' => $this->company_country,
             'company_notes' => $this->company_notes,
             'agent_type' => $this->agent_type,
             'business_source' => $this->business_source,
-        ]);
+            'edited_by' => $this->user = Auth()->user()->id,
+        ], ['user_id' => function ($company) {
+            return $company->exists ? $company->user_id : Auth::user()->id;
+        }]);
   
         session()->flash('message', 
             $this->company_id ? 'Company Updated Successfully.' : 'Company Created Successfully.');
