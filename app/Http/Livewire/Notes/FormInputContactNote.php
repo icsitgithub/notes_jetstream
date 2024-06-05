@@ -8,7 +8,7 @@ use App\Models\Company;
 
 class FormInputContactNote extends Component
 {
-    public $contact_name, $title, $phone_number, $email, $contact_id, $company_id;
+    public $contact_gender, $first_name, $last_name, $title, $phone_number, $email, $contact_id, $company_id;
 
 /**
      * The attributes that are mass assignable.
@@ -19,7 +19,9 @@ class FormInputContactNote extends Component
     {
         $this->validate([
             'company_id' => 'required',
-            'contact_name' => 'required',
+            'contact_gender' => 'required',
+            'first_name' => 'required',
+            'last_name' => 'nullable',
             'title' => 'required',
             'phone_number' => 'nullable|max:25',
             'email' => 'required',
@@ -28,7 +30,9 @@ class FormInputContactNote extends Component
         Contact::updateOrCreate(['id' => $this->contact_id], [
             'user_id' => $this->user = auth()->user()->id,
             'company_id' => $this->company_id,
-            'contact_name' => $this->contact_name,
+            'contact_gender' => $this->contact_gender,
+            'first_name' => $this->first_name,
+            'last_name' => $this->last_name,
             'title' => $this->title,
             'phone_number' => $this->phone_number,
             'email' => $this->email,

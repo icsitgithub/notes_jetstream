@@ -68,7 +68,7 @@
                         </div>
                         <div>
                             <h1 class="mt-2 text-lg font-semibold text-gray-800 dark:text-black">
-                                {{ $contact->contact_name }}
+                                {{ $contact->contact_gender }} {{ $contact->first_name }}
                             </h1>
                             <p class="font-normal text-sm text-gray-700 dark:text-black"><i
                                     class="fa-solid fa-building"></i>

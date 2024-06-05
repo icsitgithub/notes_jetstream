@@ -35,12 +35,32 @@
                         </select>
                     </div>
                     <div class="mt-4 mb-4">
-                        <label for="contact_name" class="block text-gray-700 text-sm font-bold mb-2">Contact
+                        <label for="contact_gender"
+                        class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-700">Gender</label>
+                        <select wire:model="contact_gender" placeholder="Choose Agent Type"
+                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-black focus:border-black block w-full p-2.5 dark:text-black dark:focus:ring-black dark:focus:border-black">
+                            <option value="" selected disabled>Select Option</option>
+                            <option value="Mr.">Mr. </option>
+                            <option value="Mrs.">Mrs. </option>
+                        </select>
+                    </div>
+                    <div class="mt-4 mb-4">
+                        <label for="first_name" class="block text-gray-700 text-sm font-bold mb-2">First
                             Name :</label>
                         <input type="text"
                             class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                            id="contact_name" placeholder="Enter Contact Name" wire:model="contact_name">
-                        @error('contact_name')
+                            id="first_name" placeholder="Enter First Name" wire:model="first_name">
+                        @error('first_name')
+                            <span class="text-red-500">{{ $message }}</span>
+                        @enderror
+                    </div>
+                    <div class="mt-4 mb-4">
+                        <label for="last_name" class="block text-gray-700 text-sm font-bold mb-2">Last
+                            Name :</label>
+                        <input type="text"
+                            class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                            id="last_name" placeholder="Enter Last Name" wire:model="last_name">
+                        @error('last_name')
                             <span class="text-red-500">{{ $message }}</span>
                         @enderror
                     </div>
@@ -56,7 +76,7 @@
                     <div class="mb-4">
                         <label for="phone_number" class="block text-gray-700 text-sm font-bold mb-2">Phone Number
                             :</label>
-                        <input type="text"
+                        <input type="tel"
                             class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                             id="phone_number" placeholder="Enter Phone Number" wire:model="phone_number">
                         @error('phone_number')
@@ -96,6 +116,13 @@
         </form>
     </div>
 </div>
+<script src="https://cdn.jsdelivr.net/npm/intl-tel-input@18.2.1/build/js/intlTelInput.min.js"></script>
+<script>
+    const input = document.querySelector("#phone_number");
+    window.intlTelInput(input, {
+      utilsScript: "https://cdn.jsdelivr.net/npm/intl-tel-input@18.2.1/build/js/utils.js",
+    });
+</script>
 @push('scripts')
 <script>
     $(document).ready(function() {

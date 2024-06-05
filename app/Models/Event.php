@@ -10,8 +10,8 @@ class Event extends Model
 {
     use HasFactory;
 
-    public $guarded = ['id', 'user_id'];
-    public $fillable = ['event_name'];
+    public $guarded = ['id'];
+    public $fillable = ['user_id', 'event_name'];
 
     /**
      * Get all of the note for the Event

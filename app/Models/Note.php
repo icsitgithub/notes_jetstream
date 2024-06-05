@@ -36,20 +36,25 @@ class Note extends Model
     {
         return $this->belongsTo(company::class);
     }
+
+    public function user(): BelongsTo
+    {
+        return $this->belongsTo(user::class);
+    }
     
     public function scopeFilter($query, array $filters){
         $query->when($filters['search'] ?? false, function($query, $search){
             return $query->where(function($query) use ($search){
                 return $query->where('title', 'like', '%'.$search.'%')
                             ->orWhere('body', 'like', '%'.$search.'%')
-                            // ->orWhereHas('company', function($query) use ($search){
-                            //     return $query->where('company_name', 'like', '%'.$search.'%');
-                            // })->with('company')
+                            ->orWhereHas('company', function($query) use ($search){
+                                return $query->where('company_name', 'like', '%'.$search.'%');
+                            })->with('company')
                             ->orWhereHas('event', function($query) use ($search){
                                 return $query->where('event_name', 'like', '%'.$search.'%');
                             })->with('event')
                             ->orWhereHas('contact', function($query) use ($search){
-                                return $query->where('contact_name', 'like', '%'.$search.'%');
+                                return $query->where('first_name', 'like', '%'.$search.'%');
                             })->with('contact');
             });
         });

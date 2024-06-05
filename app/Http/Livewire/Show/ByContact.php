@@ -12,7 +12,7 @@ use Livewire\Component;
 class ByContact extends Component
 {
     use WithPagination;
-    public $contact_name, $title, $phone_number, $email, $contact_id, $photo;
+    public $contact_name, $title, $phone_number, $email, $contact_id, $photo, $gender;
     public $isOpen = 0;
     
     public $companies, $contacts, $search;
@@ -34,7 +34,7 @@ class ByContact extends Component
 
     public function render()
     {
-        $notes = Note::where('contact_id', $this->contact_id)->orderBy('created_at', 'DESC')->filter(request(['search']))->paginate(10);
+        $notes = Note::where('contact_id', $this->contact_id)->where('user_id', auth()->user()->id)->orderBy('created_at', 'DESC')->filter(request(['search']))->paginate(10);
         return view('livewire.show.by-contact',[
             'notes' => $notes
         ]);
@@ -133,7 +133,11 @@ class ByContact extends Component
      */
     public function delete($id)
     {
-        Event::find($id)->delete();
-        session()->flash('message', 'Contact Deleted Successfully.');
+        $event = Event::where('user_id', auth()->user()->id)->find($id);
+        if ($event != null){
+            $event->delete();
+            session()->flash('message', 'Contact Deleted Successfully.');
+        }
+        session()->flash('message', 'Can Only Be Deleted by The Author');
     }
 }

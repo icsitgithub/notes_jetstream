@@ -72,10 +72,12 @@
                         <div class="p-2 group-open:bg-gray-50">
                             Company : 
                             <a href="/showNoteByCompany/{{ $note->contact->company_id }}">{{ $note->contact->company->company_name }}</a> |
-                            Contact Name : 
-                            <a href="/showNoteByContact/{{ $note->contact_id }}">{{ $note->contact->contact_name }}</a> |
+                            Contact : 
+                            <a href="/showNoteByContact/{{ $note->contact_id }}">{{ $note->contact->first_name }}</a> |
                             Event : 
-                            <a href="/showNoteByEvent/{{ $note->event_id }}">{{ $note->event->event_name }}</a>
+                            <a href="/showNoteByEvent/{{ $note->event_id }}">{{ $note->event->event_name }}</a> |
+                            Created by :
+                            <a>{{ $note->user->name }}</a>
                             <div class="flex flex-row-reverse">
                                 <a href="/formSendMail/{{ $note->id }}">
                                     <button

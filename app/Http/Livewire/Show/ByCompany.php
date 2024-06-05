@@ -3,6 +3,7 @@
 namespace App\Http\Livewire\Show;
 
 use App\Models\Note;
+use App\Models\User;
 use App\Models\Event;
 use App\Models\Company;
 use App\Models\Contact;
@@ -15,8 +16,8 @@ class ByCompany extends Component
     public $title, $body, $note_id;
     public $isOpen = 0;
 
-    public $companies, $contacts, $search;
-    public $company_id, $event_id,$contact_id;
+    public $companies, $contacts, $users, $search;
+    public $company_id, $event_id, $contact_id, $user_id;
 
     public function mount($id)
     {
@@ -34,7 +35,7 @@ class ByCompany extends Component
 
     public function render()
     {
-        $notes = Note::where('company_id', $this->company_id)->orderBy('created_at', 'DESC')->filter(request(['search']))->paginate(10);
+        $notes = Note::where('company_id', $this->company_id)->where('user_id', auth()->user()->id)->orderBy('created_at', 'DESC')->filter(request(['search']))->paginate(10);
         // dd($notes);
         return view('livewire.show.by-company',[
             'notes' => $notes
@@ -82,6 +83,7 @@ class ByCompany extends Component
         $this->event_id = '';
         $this->contact_id = '';
         $this->company_id = '';
+        $this->company_note = '';
         $this->title = '';
         $this->body = '';
     }
@@ -92,6 +94,7 @@ class ByCompany extends Component
             'event_id' => 'required',
             'contact_id' => 'required',
             'company_id' => 'required',
+            'company_note' => 'required',
             'title' => 'required',
             'body' => 'required',
         ]);
@@ -101,6 +104,7 @@ class ByCompany extends Component
             'event_id' => $this->event_id,
             'contact_id' => $this->contact_id,
             'company_id' => $this->company_id,
+            'company_note' => $this->company_note,
             'title' => $this->title,
             'body' => $this->body
         ]);
@@ -123,6 +127,7 @@ class ByCompany extends Component
         $this->event_id = $note->event_id;
         $this->contact_id = $note->contact_id;
         $this->company_id = $note->company_id;
+        $this->company_id = $note->company_note;
         $this->title = $note->title;
         $this->body = $note->body;
     
@@ -136,7 +141,11 @@ class ByCompany extends Component
      */
     public function delete($id)
     {
-        Note::find($id)->delete();
-        session()->flash('message', 'Note Deleted Successfully.');
+        $note = Note::where('user_id', auth()->user()->id)->find($id);
+        if ($note != null){
+            $note->delete();
+            session()->flash('message', 'Note Deleted Successfully.');
+        }
+        session()->flash('message', 'Can Only Be Deleted by The Author');
     }
 }
