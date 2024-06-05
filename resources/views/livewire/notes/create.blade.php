@@ -43,7 +43,7 @@
                                     class="w-full bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-black focus:border-black p-2.5 dark:text-black dark:focus:ring-black dark:focus:border-black">
                                     <option value=0 selected>Select Contact</option>
                                     @foreach ($contacts as $contact)
-                                        <option value="{{ $contact->id }}">{{ $contact->contact_name }}</option>
+                                        <option value="{{ $contact->id }}">{{ $contact->first_name }}</option>
                                     @endforeach
                                 </select>
                             </div>

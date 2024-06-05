@@ -63,7 +63,7 @@
                     <div>
                         <div class="flex flex-row mt-2">
                             <span
-                                class="text-sm font-light text-gray-800 dark:text-gray-800">{{ $company->created_at->format('Y-m-d') }}</span>
+                                class="text-sm font-light text-gray-800 dark:text-gray-800">{{ $company->updated_at->format('Y-m-d') }}</span>
                         </div>
                         <div>
                             <h1 class="mt-2 text-lg font-semibold text-gray-800 dark:text-black">
@@ -73,6 +73,21 @@
                                 {{ $company->company_country }} </p>
                             <p class="font-normal text-gray-700 dark:text-black"><i class="fa-solid fa-user-tie"></i>
                                 {{ $company->agent_type }} </p>
+                            <p class="font-normal text-gray-700 dark:text-black"><i class="fa-solid fa-tag"></i>
+                                {{ $company->business_source }} </p>
+
+                            @php
+                                $cleaned_text = strip_tags(html_entity_decode($company->company_notes));
+                            @endphp
+                            <p class="font-normal text-gray-700 dark:text-black">
+                                <i class="fa-solid fa-pen-fancy"></i> Company Notes : 
+                                @if(strlen($company->company_notes) > 50)
+                                {{-- <span class="truncate">{!! strip_tags(Str::limit($company->company_notes, 50)) !!}</span> --}}
+                                    <span class="read-more-show">More <i class="fa fa-angle-down"></i></span>
+                                    <span class="read-more-content hidden" data-fulltext="{{ $cleaned_text }}"></span>
+                                    <span class="read-more-less hidden">Less <i class="fa fa-angle-up"></i></span>
+                                @endif
+                            </p>  
                         </div>
                         <div class="flex flex-row-reverse">
                             <button wire:click="delete({{ $company->id }})"
@@ -115,4 +130,27 @@
         }
         element.parentNode.parentNode.removeChild(element.parentNode);
     }
+
+    // Hide the extra content initially:
+    $(document).ready(function() {
+    // Show More
+        $(document).on('click', '.read-more-show', function() {
+            var $container = $(this).closest('p');
+            var fullText = $container.find('.read-more-content').data('fulltext');
+            $container.find('.truncate').hide();
+            $container.find('.read-more-content').text(fullText).removeClass('hidden');
+            $(this).hide();
+            $container.find('.read-more-less').show(); // Menampilkan tombol "Show Less"
+        });
+
+        // Show Less
+        $(document).on('click', '.read-more-less', function() {
+            var $container = $(this).closest('p');
+            var truncatedText = $container.find('.truncate').text();
+            $container.find('.truncate').show();
+            $container.find('.read-more-content').addClass('hidden'); // Menyembunyikan teks penuh
+            $(this).hide();
+            $container.find('.read-more-show').show(); // Menampilkan tombol "Show More" kembali
+        });
+    });
 </script>

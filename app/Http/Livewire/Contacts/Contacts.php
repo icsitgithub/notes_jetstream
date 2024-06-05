@@ -3,7 +3,6 @@ namespace App\Http\Livewire\Contacts;
 
 use Livewire\WithPagination;
 use Livewire\Component;
-use App\Models\Event;
 use App\Models\Contact;
 use App\Models\Company;
 
@@ -66,7 +65,9 @@ class Contacts extends Component
     private function resetInputFields(){
         $this->user_id = '';
         $this->company_id = '';
-        $this->contact_name = '';
+        $this->contact_gender = '';
+        $this->first_name = '';
+        $this->last_name = '';
         $this->title = '';
         $this->phone_number = '';
         $this->email = '';
@@ -81,7 +82,9 @@ class Contacts extends Component
     {
         $this->validate([
             'company_id' => 'required',
-            'contact_name' => 'required',
+            'contact_gender' => 'required',
+            'first_name' => 'required',
+            'last_name' => 'nullable',
             'title' => 'required',
             'phone_number' => 'nullable|max:25',
             'email' => 'required',
@@ -90,7 +93,9 @@ class Contacts extends Component
         Contact::updateOrCreate(['id' => $this->contact_id], [
             'user_id' => $this->user = auth()->user()->id,
             'company_id' => $this->company_id,
-            'contact_name' => $this->contact_name,
+            'contact_gender' => $this->contact_gender,
+            'first_name' => $this->first_name,
+            'last_name' => $this->last_name,
             'title' => $this->title,
             'phone_number' => $this->phone_number,
             'email' => $this->email,
@@ -114,7 +119,9 @@ class Contacts extends Component
         $this->companies = Company::orderBy('company_name')->get();
         $this->contact_id = $id;
         $this->company_id = $contact->company_id;
-        $this->contact_name = $contact->contact_name;
+        $this->contact_gender = $contact->contact_gender;
+        $this->first_name = $contact->first_name;
+        $this->last_name = $contact->last_name;
         $this->title = $contact->title;
         $this->phone_number = $contact->phone_number;
         $this->email = $contact->email;
@@ -128,7 +135,11 @@ class Contacts extends Component
      */
     public function delete($id)
     {
-        Contact::find($id)->delete();
-        session()->flash('message', 'Contact Deleted Successfully.');
+        $contact = Contact::where('user_id', auth()->user()->id)->find($id);
+        if($contact != null){
+            $contact->delete();
+            session()->flash('message', 'Contact Deleted Successfully.');
+        }
+        session()->flash('message', 'Can Only Be Deleted by The Author');
     }
 }

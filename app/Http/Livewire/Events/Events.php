@@ -9,7 +9,7 @@ use App\Models\User;
 class Events extends Component
 {
     use WithPagination;
-    public $event_name, $event_id, $user_id;
+    public $event_name, $event_id;
     public $isOpen = 0;
 
     /**
@@ -78,7 +78,7 @@ class Events extends Component
 
         Event::updateOrCreate(['id' => $this->event_id], [
             'user_id' => $this->user = auth()->user()->id,
-            'event_name' => $this->event_name
+            'event_name' => $this->event_name,
         ]);
 
         session()->flash('message', 
@@ -107,7 +107,12 @@ class Events extends Component
      */
     public function delete($id)
     {
-        Event::find($id)->delete();
-        session()->flash('message', 'Event Deleted Successfully.');
+        $event = Event::where('user_id', auth()->user()->id)->find($id);
+        if($event != null){
+            $event->delete();
+            session()->flash('message', 'Event Deleted Successfully.');
+        }
+        session()->flash('warning', 'Events can only be deleted by the creator');
+
     }
 }

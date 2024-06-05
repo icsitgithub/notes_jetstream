@@ -34,7 +34,7 @@ class ByEvent extends Component
 
     public function render()
     {
-        $notes = Note::where('event_id', $this->event_id)->orderBy('created_at', 'DESC')->filter(request(['search']))->paginate(10);
+        $notes = Note::where('event_id', $this->event_id)->where('user_id', auth()->user()->id)->orderBy('created_at', 'DESC')->filter(request(['search']))->paginate(10);
         // dd($notes);
         return view('livewire.show.by-event',[
             'notes' => $notes
@@ -136,7 +136,11 @@ class ByEvent extends Component
      */
     public function delete($id)
     {
-        Note::find($id)->delete();
-        session()->flash('message', 'Note Deleted Successfully.');
+        $note = Note::where('user_id', auth()->user()->id)->find($id);
+        if ($note != null){
+            $note->delete();
+            session()->flash('message', 'Note Deleted Successfully.');
+        }
+        session()->flash('message', 'Can Only Be Deleted by The Author');
     }
 }

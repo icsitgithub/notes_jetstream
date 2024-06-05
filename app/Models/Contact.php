@@ -37,7 +37,8 @@ class Contact extends Model
     public function scopeFilter($query, array $filters){
         $query->when($filters['search'] ?? false, function($query, $search){
             return $query->where(function($query) use ($search){
-                return $query->where('contact_name', 'like', '%'.$search.'%')
+                return $query->where('first_name', 'like', '%'.$search.'%')
+                            ->orWhere('last_name', 'like', '%'.$search.'%')
                             ->orWhere('phone_number', 'like', '%'.$search.'%')
                             ->orWhere('email', 'like', '%'.$search.'%')
                             ->orWhere('title', 'like', '%'.$search.'%')

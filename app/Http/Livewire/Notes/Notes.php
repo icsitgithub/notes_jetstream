@@ -41,7 +41,7 @@ class Notes extends Component
     public function render()
     {
         return view('livewire.notes.notes', [
-            'notes' => Note::where('user_id', auth()->user()->id)->orderBy('created_at', 'DESC')->filter(request(['search']))->paginate(10)
+            'notes' => Note::where('user_id', auth()->user()->id)->orderBy('created_at', 'DESC')->filter(request(['search']))->paginate(5)
         ]);
     }
 
@@ -128,7 +128,7 @@ class Notes extends Component
         $note = Note::findOrFail($id);
         // dd($note);
         $this->events = Event::orderBy('event_name')->get();
-        $this->contacts = Contact::orderBy('contact_name')->get();
+        $this->contacts = Contact::orderBy('first_name')->get();
         $this->companies = Company::orderBy('company_name')->get();
         $this->note_id = $id;
         $this->event_id = $note->event_id;
@@ -147,7 +147,11 @@ class Notes extends Component
      */
     public function delete($id)
     {
-        Note::find($id)->delete();
-        session()->flash('message', 'Note Deleted Successfully.');
+        $note = Note::where('user_id', auth()->user()->id)->find($id)->delete();
+        if($note != null){
+            $note->delete();
+            session()->flash('message', 'Event Deleted Successfully.');
+        }
+        session()->flash('warning', 'Events can only be deleted by the creator');
     }
 }

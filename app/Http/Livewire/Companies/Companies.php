@@ -4,14 +4,16 @@ namespace App\Http\Livewire\Companies;
 use Livewire\Component;
 use Livewire\WithPagination;
 use App\Models\Company;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 
 class Companies extends Component
 {
     use WithPagination;
 
-    public $company_name, $company_country, $agent_type, $company_id;
+    public $user_id, $company_name, $company_country, $agent_type, $business_source, $company_id;
     public $isOpen = 0;
+
     /**
      * The attributes that are mass assignable.
      *
@@ -21,7 +23,7 @@ class Companies extends Component
     {
         // $this->companies = Company::all()->sortBy('company_name');
         return view('livewire.companies.companies', [
-            'companies' => Company::orderBy('company_name')->filter(request(['search']))->paginate(12),
+            'companies' => Company::groupBy('id')->orderBy('company_name')->filter(request(['search']))->paginate(12),
         ]);
     }
     /**
@@ -58,11 +60,13 @@ class Companies extends Component
      * @var array
      */
     private function resetInputFields(){
+        $this->company_id = '';
         $this->user_id = '';
         $this->company_name = '';
-        $this->company_country = '';
         $this->agent_type = '';
-        $this->company_id = '';
+        $this->business_source = '';
+        $this->company_country = '';
+        $this->company_notes = '';
     }
     /**
      * The attributes that are mass assignable.
@@ -75,13 +79,26 @@ class Companies extends Component
             'company_name' => 'required',
             'company_country' => 'required',
             'agent_type' => 'required',
+            // 'business_source' => 'required',
         ]);
+
+        $company = Company::find($this->company_id);
+
+        if ($company) {
+            // Jika company ada, gunakan user_id yang sudah ada di database
+            $userId = $company->user_id;
+        } else {
+            // Jika company tidak ada (membuat baru), gunakan user id dari auth
+            $userId = Auth::id();
+        }
    
         Company::updateOrCreate(['id' => $this->company_id], [
-            'user_id' => $this->user = auth()->user()->id,
+            'user_id' => $this->userId,
             'company_name' => $this->company_name,
             'company_country' => $this->company_country,
+            'company_notes' => $this->company_notes,
             'agent_type' => $this->agent_type,
+            'business_source' => $this->business_source,
         ]);
   
         session()->flash('message', 
@@ -91,7 +108,7 @@ class Companies extends Component
         $this->resetInputFields();
     }
     /**
-     * The attributes that are mass assignable.
+     * The attributes that are mass assignable
      *
      * @var array
      */
@@ -101,7 +118,9 @@ class Companies extends Component
         $this->company_id = $id;
         $this->company_name = $company->company_name;
         $this->company_country = $company->company_country;
+        $this->company_notes = $company->company_notes;
         $this->agent_type = $company->agent_type;
+        $this->business_source = $company->business_source;
     
         $this->openModal();
     }
@@ -112,7 +131,11 @@ class Companies extends Component
      */
     public function delete($id)
     {
-        Company::find($id)->delete();
-        session()->flash('message', 'Company Deleted Successfully.');
+        $company = Company::where('user_id', auth()->user()->id)->find($id);
+        if($company != null){
+            $company->delete();
+            session()->flash('message', 'Company Deleted Successfully.');
+        }
+        session()->flash('message', 'Can Only Be Deleted by The Author');
     }
 }
