@@ -103,7 +103,7 @@
                                 class="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-black bg-gray-0 rounded-lg hover:bg-gray-400 focus:ring-4 focus:outline-none focus:ring-gray-300 dark:bg-gray-0 dark:hover:bg-gray-400 dark:focus:ring-gray-300 ease-in-out duration-150">
                                 <i class="fa-solid fa-pen"></i>
                             </button>
-                            <a href="/showNoteByCompany/{{ $company->id }}">
+                            <a href="/showContactByCompany/{{ $company->id }}">
                                 <button
                                     class="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-black bg-gray-0 rounded-lg hover:bg-gray-400 focus:ring-4 focus:outline-none focus:ring-gray-300 dark:bg-gray-0 dark:hover:bg-gray-400 dark:focus:ring-gray-300 ease-in-out duration-150">
                                     <i class="fa-solid fa-magnifying-glass"></i>

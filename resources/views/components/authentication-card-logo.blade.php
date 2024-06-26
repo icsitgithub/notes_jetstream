@@ -1,3 +1,3 @@
 <a href="/">
-    <img src="{{ asset('ics_travel.jpg') }}" class="h-16 w-20" alt="ICS" />
+    <img src="{{ asset('ics_logo.png') }}" class="h-20 w-25" alt="ICS" />
 </a>

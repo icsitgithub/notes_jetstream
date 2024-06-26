@@ -82,7 +82,7 @@
                         <div class="p-2 group-open:bg-gray-50">
                             Company :
                             <a
-                                href="/showNoteByCompany/{{ $note->contact->company_id }}">{{ $note->contact->company->company_name }}</a>
+                                href="/showNoteByCompany/{{ $note->company_id }}">{{ $note->contact->company->company_name }}</a>
                             |
                             Contact :
                             <a href="/showNoteByContact/{{ $note->contact_id }}">{{ $note->contact->first_name }}</a>

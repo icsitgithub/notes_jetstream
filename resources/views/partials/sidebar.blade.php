@@ -4,7 +4,7 @@
     <div class="h-full px-3 pb-4 overflow-y-auto bg-white dark:bg-gray-800">
         <div class="px-8">
             <div class="h-16 w-full flex items-center">
-                <img src="{{ asset('ics_travel.jpg') }}" class="h-8 mr-3" alt="ICS" />
+                <img src="{{ asset('ics_travel_official.jpg') }}" class="h-10 mr-3" alt="ICS" />
                 <span
                     class="self-center text-xl font-semibold sm:text-2xl whitespace-nowrap dark:text-white">ICS-Notes</span>
             </div>
