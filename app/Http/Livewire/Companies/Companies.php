@@ -83,6 +83,7 @@ class Companies extends Component
         ]);
    
         Company::updateOrCreate(['id' => $this->company_id], [
+            'user_id' => $this->user = Auth()->user()->id,
             'company_name' => $this->company_name,
             'company_country' => $this->company_country,
             'company_notes' => $this->company_notes,

@@ -12,7 +12,7 @@ class Contact extends Model
     use HasFactory;
 
     public $guarded = ['id'];
-    public $with = ['company'];
+    public $with = ['company','user'];
     
     /**
      * Get the company that owns the Contact
@@ -22,6 +22,16 @@ class Contact extends Model
     public function company(): BelongsTo
     {
         return $this->belongsTo(Company::class);
+    }
+
+    public function editor(): BelongsTo
+    {
+        return $this->belongsTo(User::class, 'edited_by');
+    }
+
+    public function user(): BelongsTo
+    {
+        return $this->belongsTo(User::class, 'user_id');
     }
 
     /**

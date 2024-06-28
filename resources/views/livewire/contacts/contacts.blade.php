@@ -62,9 +62,9 @@
             @foreach ($contacts as $contact)
                 <article class="w-full max-w-sm px-4 py-3 rounded-md shadow-md bg-white border border-gray-600">
                     <div>
-                        <div class="flex flex-row mt-2">
+                        <div class="flex flex-row-reverse mt-2">
                             <span
-                                class="text-sm font-light text-gray-800 dark:text-gray-800">{{ $contact->created_at->format('Y-m-d') }}</span>
+                                class="text-sm font-light text-gray-800 dark:text-gray-800"> {{ $contact->editor ? $contact->editor->name : ($contact->user ? $contact->user->name : 'Unknown') }} || {{ $contact->updated_at->format('Y-m-d') }}</span>
                         </div>
                         <div>
                             <h1 class="mt-2 text-lg font-semibold text-gray-800 dark:text-black">

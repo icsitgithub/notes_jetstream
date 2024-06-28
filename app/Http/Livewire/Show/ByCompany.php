@@ -22,7 +22,7 @@ class ByCompany extends Component
     public function mount($id)
     {
         $this->company_id = $id;
-        $this->companies = Company::orderBy('company_name')->get();
+        $this->companies = Company::where('id', $this->company_id)->get();
         $this->contacts = collect();
     }
     
@@ -53,6 +53,7 @@ class ByCompany extends Component
         $this->openModal();
     }
 
+
     /**
      * The attributes that are mass assignable.
      *
@@ -62,7 +63,6 @@ class ByCompany extends Component
     {
         $this->isOpen = true;
     }
-
     /**
      * The attributes that are mass assignable.
      *
@@ -72,7 +72,6 @@ class ByCompany extends Component
     {
         $this->isOpen = false;
     }
-
     /**
      * The attributes that are mass assignable.
      *
@@ -83,18 +82,20 @@ class ByCompany extends Component
         $this->event_id = '';
         $this->contact_id = '';
         $this->company_id = '';
-        $this->company_note = '';
         $this->title = '';
         $this->body = '';
     }
-
+    /**
+     * The attributes that are mass assignable.
+     *
+     * @var array
+     */
     public function store()
     {
         $this->validate([
             'event_id' => 'required',
             'contact_id' => 'required',
             'company_id' => 'required',
-            'company_note' => 'required',
             'title' => 'required',
             'body' => 'required',
         ]);
@@ -104,7 +105,6 @@ class ByCompany extends Component
             'event_id' => $this->event_id,
             'contact_id' => $this->contact_id,
             'company_id' => $this->company_id,
-            'company_note' => $this->company_note,
             'title' => $this->title,
             'body' => $this->body
         ]);
@@ -115,19 +115,22 @@ class ByCompany extends Component
         $this->closeModal();
         $this->resetInputFields();
     }
-
+    /**
+     * The attributes that are mass assignable.
+     *
+     * @var array
+     */
     public function edit($id)
     {
         $note = Note::findOrFail($id);
         // dd($note);
         $this->events = Event::orderBy('event_name')->get();
-        $this->contacts = Contact::orderBy('contact_name')->get();
+        $this->contacts = Contact::orderBy('first_name')->get();
         $this->companies = Company::orderBy('company_name')->get();
         $this->note_id = $id;
         $this->event_id = $note->event_id;
         $this->contact_id = $note->contact_id;
         $this->company_id = $note->company_id;
-        $this->company_id = $note->company_note;
         $this->title = $note->title;
         $this->body = $note->body;
     
@@ -141,11 +144,11 @@ class ByCompany extends Component
      */
     public function delete($id)
     {
-        $note = Note::where('user_id', auth()->user()->id)->find($id);
-        if ($note != null){
+        $note = Note::where('user_id', auth()->user()->id)->find($id)->delete();
+        if($note != null){
             $note->delete();
-            session()->flash('message', 'Note Deleted Successfully.');
+            session()->flash('message', 'Event Deleted Successfully.');
         }
-        session()->flash('message', 'Can Only Be Deleted by The Author');
+        session()->flash('warning', 'Events can only be deleted by the creator');
     }
 }

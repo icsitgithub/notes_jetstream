@@ -5,6 +5,7 @@ use Livewire\WithPagination;
 use Livewire\Component;
 use App\Models\Contact;
 use App\Models\Company;
+use Illuminate\Support\Facades\Auth;
 
 class Contacts extends Component
 {
@@ -19,9 +20,10 @@ class Contacts extends Component
     */
     public function render()
     {
-        // $this->events = Event::all();
+        $contacts = Contact::orderBy('created_at', 'DESC')->filter(request(['search']))->paginate(12);
+        // dd($contacts);
         return view('livewire.contacts.contacts',[
-            'contacts' => Contact::orderBy('created_at', 'DESC')->filter(request(['search']))->paginate(12)
+            'contacts' => $contacts
         ]);
     }
 
@@ -71,6 +73,7 @@ class Contacts extends Component
         $this->title = '';
         $this->phone_number = '';
         $this->email = '';
+        $this->edited_by = '';
     }
     
     /**
@@ -88,18 +91,25 @@ class Contacts extends Component
             'title' => 'required',
             'phone_number' => 'nullable|max:25',
             'email' => 'required',
+            'edited_by' => 'nullable',
         ]);
    
-        Contact::updateOrCreate(['id' => $this->contact_id], [
-            'user_id' => $this->user = auth()->user()->id,
-            'company_id' => $this->company_id,
-            'contact_gender' => $this->contact_gender,
-            'first_name' => $this->first_name,
-            'last_name' => $this->last_name,
-            'title' => $this->title,
-            'phone_number' => $this->phone_number,
-            'email' => $this->email,
-        ]);
+        Contact::updateOrCreate(
+            ['id' => $this->contact_id],
+            [
+                'user_id' => $this->user = Auth()->user()->id,
+                'company_id' => $this->company_id,
+                'contact_gender' => $this->contact_gender,
+                'first_name' => $this->first_name,
+                'last_name' => $this->last_name,
+                'title' => $this->title,
+                'phone_number' => $this->phone_number,
+                'email' => $this->email,
+                'edited_by' => $this->user = Auth()->user()->id,
+            ],
+            ['user_id' => function ($contact) {
+                return $contact->exists ? $contact->user_id : Auth::user()->id;
+            }]);
   
         session()->flash('message', 
             $this->company_id ? 'Contact Updated Successfully.' : 'Contact Created Successfully.');

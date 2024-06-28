@@ -1,9 +1,32 @@
 <div class="py-1">
     <div class="mx-auto sm:px-6 lg:px-8">
         <x-slot name="header">
-            <h1 class="font-semibold text-xl text-gray-800 leading-tight">
-                {{ __('Contact Lists') }}
-            </h1>
+            @foreach ($companies as $company)
+            <div>
+                <h1 class="font-semibold text-xl text-gray-800 leading-tight">
+                    {{ __('Company Details : ') }} {{ $company->company_name }}
+                </h1>
+                <p class="font-normal text-gray-700 dark:text-black"><i class="fa-solid fa-building"></i>
+                    {{ $company->company_country }} </p>
+                <p class="font-normal text-gray-700 dark:text-black"><i class="fa-solid fa-user-tie"></i>
+                    {{ $company->agent_type }} </p>
+                <p class="font-normal text-gray-700 dark:text-black"><i class="fa-solid fa-tag"></i>
+                    {{ $company->business_source }} </p>
+
+                @php
+                    $cleaned_text = strip_tags(html_entity_decode($company->company_notes));
+                @endphp
+                <p class="font-normal text-gray-700 dark:text-black">
+                    <i class="fa-solid fa-pen-fancy"></i> Company Notes : 
+                    <span class="truncate">{!! $company->company_notes !!}</span>
+                    @if(strlen($company->company_notes) > 50)
+                        <span class="read-more-show">More <i class="fa fa-angle-down"></i></span>
+                        <span class="read-more-content hidden" data-fulltext="{{ $cleaned_text }}"></span>
+                        <span class="read-more-less hidden">Less <i class="fa fa-angle-up"></i></span>
+                    @endif
+                </p>  
+            </div>
+            @endforeach
         </x-slot>
         @if (session()->has('message'))
             <div class="px-6 py-4 border-0 rounded relative mb-4 bg-teal-100 border-t-4 border-teal-500 rounded-b text-teal-900">
@@ -29,23 +52,15 @@
                     <input type="search" wire:model="search" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 p-2.5 dark:bg-white dark:border-gray-600 dark:placeholder-black dark:text-black dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Search" name="search">
                 </div>
             </form>
-
-            <div class="grid place-content-end">
-                <button wire:click="create()" class="inline items-center px-4 py-2 my-3 bg-black border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-gray-700 active:bg-gray-900 focus:outline-none focus:border-gray-900 focus:shadow-outline-gray disabled:opacity-25 transition ease-in-out duration-150">
-                    Create New Contact
-                </button>
-            </div>
-            @if ($isOpen)
-                @include('livewire.contacts.create')
-            @endif
         </div>
 
-        <div class="grid grid-cols-4 gap-2">
+        <div class="grid grid-cols-4 gap-2 mt-3">
             @foreach ($contacts as $contact)
                 <article class="w-full max-w-sm px-4 py-3 rounded-md shadow-md bg-white border border-gray-600">
                     <div>
-                        <div class="flex flex-row mt-2">
-                            <span class="text-sm font-light text-gray-800 dark:text-gray-800">{{ $contact->created_at->format('Y-m-d') }}</span>
+                        <div class="flex flex-row-reverse mt-2">
+                            <span
+                                class="text-sm font-light text-gray-800 dark:text-gray-800"> {{$contact->edited_by? $contact->editor->name : $contact->user->name}} || {{ $contact->updated_at->format('Y-m-d') }}</span>
                         </div>
                         <div>
                             <h1 class="mt-2 text-lg font-semibold text-gray-800 dark:text-black">

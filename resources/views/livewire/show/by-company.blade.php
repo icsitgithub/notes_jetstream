@@ -1,9 +1,32 @@
 <div class="py-1">
     <div class="mx-auto sm:px-6 lg:px-8">
         <x-slot name="header">
-            <h1 class="font-semibold text-xl text-gray-800 leading-tight">
-                {{ __('Note Lists') }}
-            </h1>
+            @foreach ($companies as $company)
+            <div>
+                <h1 class="font-semibold text-xl text-gray-800 leading-tight">
+                    {{ __('Company Details : ') }} {{ $company->company_name }}
+                </h1>
+                <p class="font-normal text-gray-700 dark:text-black"><i class="fa-solid fa-building"></i>
+                    {{ $company->company_country }} </p>
+                <p class="font-normal text-gray-700 dark:text-black"><i class="fa-solid fa-user-tie"></i>
+                    {{ $company->agent_type }} </p>
+                <p class="font-normal text-gray-700 dark:text-black"><i class="fa-solid fa-tag"></i>
+                    {{ $company->business_source }} </p>
+
+                @php
+                    $cleaned_text = strip_tags(html_entity_decode($company->company_notes));
+                @endphp
+                <p class="font-normal text-gray-700 dark:text-black">
+                    <i class="fa-solid fa-pen-fancy"></i> Company Notes : 
+                    <span class="truncate">{!! strip_tags(Str::limit($company->company_notes, 50)) !!}</span>
+                    @if(strlen($company->company_notes) > 50)
+                        <span class="read-more-show">More <i class="fa fa-angle-down"></i></span>
+                        <span class="read-more-content hidden" data-fulltext="{{ $cleaned_text }}"></span>
+                        <span class="read-more-less hidden">Less <i class="fa fa-angle-up"></i></span>
+                    @endif
+                </p>  
+            </div>
+            @endforeach
         </x-slot>
         @if (session()->has('message'))
             <div class="px-6 py-4 border-0 rounded relative mb-4 bg-teal-100 border-t-4 border-teal-500 rounded-b text-teal-900">

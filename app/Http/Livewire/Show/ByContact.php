@@ -45,11 +45,22 @@ class ByContact extends Component
      *
      * @var array
      */
+    public function create()
+    {
+        $this->resetInputFields();
+        $this->openModal();
+    }
+
+
+    /**
+     * The attributes that are mass assignable.
+     *
+     * @var array
+     */
     public function openModal()
     {
         $this->isOpen = true;
     }
-
     /**
      * The attributes that are mass assignable.
      *
@@ -59,7 +70,6 @@ class ByContact extends Component
     {
         $this->isOpen = false;
     }
-
     /**
      * The attributes that are mass assignable.
      *
@@ -73,7 +83,6 @@ class ByContact extends Component
         $this->title = '';
         $this->body = '';
     }
-    
     /**
      * The attributes that are mass assignable.
      *
@@ -104,7 +113,6 @@ class ByContact extends Component
         $this->closeModal();
         $this->resetInputFields();
     }
-    
     /**
      * The attributes that are mass assignable.
      *
@@ -115,7 +123,7 @@ class ByContact extends Component
         $note = Note::findOrFail($id);
         // dd($note);
         $this->events = Event::orderBy('event_name')->get();
-        $this->contacts = Contact::orderBy('contact_name')->get();
+        $this->contacts = Contact::orderBy('first_name')->get();
         $this->companies = Company::orderBy('company_name')->get();
         $this->note_id = $id;
         $this->event_id = $note->event_id;
@@ -126,6 +134,7 @@ class ByContact extends Component
     
         $this->openModal();
     }
+
      /**
      * The attributes that are mass assignable.
      *
@@ -133,11 +142,11 @@ class ByContact extends Component
      */
     public function delete($id)
     {
-        $event = Event::where('user_id', auth()->user()->id)->find($id);
-        if ($event != null){
-            $event->delete();
-            session()->flash('message', 'Contact Deleted Successfully.');
+        $note = Note::where('user_id', auth()->user()->id)->find($id)->delete();
+        if($note != null){
+            $note->delete();
+            session()->flash('message', 'Event Deleted Successfully.');
         }
-        session()->flash('message', 'Can Only Be Deleted by The Author');
+        session()->flash('warning', 'Events can only be deleted by the creator');
     }
 }
