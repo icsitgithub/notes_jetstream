@@ -63,17 +63,8 @@
                     <div>
                         <div class="flex flex-row-reverse mt-2">
                             <span
-                                class="text-sm font-light text-gray-800 dark:text-gray-800">
-                                <button wire:click="edit({{ $company->id }})">
-                                    <i class="fa-solid fa-circle-info">
-                                        
-                                    </i>
-                                </button>
-                            </span>
+                                class="text-sm font-light text-gray-800 dark:text-gray-800"> {{ $company->editor ? $company->editor->name : ($company->user ? $company->user->name : 'Unknown') }} || {{ $company->updated_at->format('Y-m-d') }}</span>
                         </div>
-                        @if ($isOpen)
-                            @include('livewire.companies.companiesInfo')
-                        @endif
                         <div>
                             <h1 class="mt-2 text-lg font-semibold text-gray-800 dark:text-black">
                                 {{ $company->company_name }}

@@ -53,7 +53,9 @@
                 </div>
             </form>
         </div>
-
+        @if ($isOpen)
+                @include('livewire.contacts.create')
+            @endif
         <div class="grid grid-cols-4 gap-2 mt-3">
             @foreach ($contacts as $contact)
                 <article class="w-full max-w-sm px-4 py-3 rounded-md shadow-md bg-white border border-gray-600">
