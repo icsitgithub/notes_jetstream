@@ -5,6 +5,7 @@ use App\Http\Livewire\Events\Events;
 use App\Http\Livewire\Contacts\Contacts;
 use App\Http\Livewire\Contacts\allContacts;
 use App\Http\Livewire\Companies\Companies;
+use App\Http\Livewire\Companies\allCompanies;
 use App\Http\Livewire\Show\ByEvent;
 use App\Http\Livewire\Show\ByCompany;
 use App\Http\Livewire\Show\ByContact;
@@ -44,6 +45,7 @@ Route::middleware([
     Route::get('/contacts', Contacts::class)->name('contacts');
     Route::get('/allContacts', allContacts::class)->name('allContacts');
     Route::get('/companies', Companies::class)->name('companies');
+    Route::get('/allCompanies', allCompanies::class)->name('allCompanies');
     Route::get('/events', Events::class)->name('events');
     Route::get('/notes', Notes::class)->name('notes');
     

@@ -46,12 +46,19 @@
                     <span class="sr-only">Search</span>
                 </button>
             </form>
-
-            <div class="grid place-content-end">
-                <button wire:click="create()"
+            <div class="flex flex-row-reverse">
+                <div>
+                    <button wire:click="create()"
                     class="inline items-center px-4 py-2 my-3 bg-black border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-gray-700 active:bg-gray-900 focus:outline-none focus:border-gray-900 focus:shadow-outline-gray disabled:opacity-25 transition ease-in-out duration-150">
                     Create New Company
-                </button>
+                    </button>
+                    <a href="/allCompanies">
+                        <button
+                            class="inline items-center px-4 py-2 my-3 bg-black border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-gray-700 active:bg-gray-900 focus:outline-none focus:border-gray-900 focus:shadow-outline-gray disabled:opacity-25 transition ease-in-out duration-150">
+                            <i class="fa-solid fa-building-user"></i>
+                        </button>
+                    </a>
+                </div>
             </div>
             @if ($isOpen)
                 @include('livewire.companies.create')
@@ -63,7 +70,7 @@
                     <div>
                         <div class="flex flex-row-reverse mt-2">
                             <span
-                                class="text-sm font-light text-gray-800 dark:text-gray-800"> {{$company->edited_by? $company->editor->name : $company->user->name}} || {{ $company->updated_at->format('Y-m-d') }}</span>
+                                class="text-sm font-light text-gray-800 dark:text-gray-800"> {{ $company->editor ? $company->editor->name : ($company->user ? $company->user->name : 'Unknown') }} || {{ $company->updated_at->format('Y-m-d') }}</span>
                         </div>
                         <div>
                             <h1 class="mt-2 text-lg font-semibold text-gray-800 dark:text-black">

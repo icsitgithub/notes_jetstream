@@ -23,7 +23,7 @@ class Companies extends Component
     {
         // $this->companies = Company::all()->sortBy('company_name');
         return view('livewire.companies.companies', [
-            'companies' => Company::groupBy('id')->orderBy('company_name')->filter(request(['search']))->paginate(12),
+            'companies' => Company::where('user_id', auth()->user()->id)->orderBy('company_name')->filter(request(['search']))->paginate(12),
         ]);
     }
     /**
