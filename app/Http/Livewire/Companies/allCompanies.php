@@ -130,4 +130,15 @@ class allCompanies extends Component
         
         $this->openModal();
     }
+    public function delete($id)
+    {
+        $company = Company::find($id);
+        if ($company && $company->user_id == auth()->user()->id) {
+            $company->delete();
+            session()->flash('message', 'Company Deleted Successfully.');
+        } else {
+            $author = $company ? $company->user->name : 'Unknown';
+            session()->flash('message', 'Can Only Be Deleted by The Author. The Author is ' . $author);
+        }
+    }
 }

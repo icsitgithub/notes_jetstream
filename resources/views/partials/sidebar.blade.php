@@ -27,16 +27,16 @@
                 </li>
                 <li
                     class="flex w-full justify-between text-gray-400 hover:text-gray-300 cursor-pointer items-center mb-6">
-                    <a href="{{ route('contacts') }}"
-                        class="{{ request()->routeIs('contacts') ? 'text-white' : '' }} flex items-center focus:outline-none focus:ring-2 focus:ring-white">
+                    <a href="{{ route('allContacts') }}"
+                        class="{{ request()->routeIs('allContacts') ? 'text-white' : '' }} flex items-center focus:outline-none focus:ring-2 focus:ring-white">
                         <i class="fa-solid fa-address-book"></i>
                         <p class="text-sm ml-2">{{ __('Contacts') }}</p>
                     </a>
                 </li>
                 <li
                     class="flex w-full justify-between text-gray-400 hover:text-gray-300 cursor-pointer items-center mb-6">
-                    <a href="{{ route('companies') }}"
-                        class="{{ request()->routeIs('companies') ? 'text-white' : '' }} flex items-center focus:outline-none focus:ring-2 focus:ring-white">
+                    <a href="{{ route('allCompanies') }}"
+                        class="{{ request()->routeIs('allCompanies') ? 'text-white' : '' }} flex items-center focus:outline-none focus:ring-2 focus:ring-white">
                         <i class="fa-solid fa-building"></i>
                         <p class="text-sm ml-2">{{ __('Companies') }}</p>
                     </a>
