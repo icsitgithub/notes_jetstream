@@ -7,7 +7,7 @@ use App\Models\Contact;
 use App\Models\Company;
 use Illuminate\Support\Facades\Auth;
 
-class Contacts extends Component
+class allContacts extends Component
 {
     use WithPagination;
     public $contact_name, $title, $phone_number, $email, $contact_id, $photo;
@@ -20,8 +20,8 @@ class Contacts extends Component
     */
     public function render()
     {
-        $contacts = Contact::where('user_id', auth()->user()->id)->orderBy('created_at', 'DESC')->filter(request(['search']))->paginate(12);
-        return view('livewire.contacts.contacts',[
+        $contacts = Contact::orderBy('created_at', 'DESC')->filter(request(['search']))->paginate(12);
+        return view('livewire.contacts.allContact',[
             'contacts' => $contacts
         ]);
     }
@@ -136,21 +136,5 @@ class Contacts extends Component
         $this->email = $contact->email;
     
         $this->openModal();
-    }
-     /**
-     * The attributes that are mass assignable.
-     *
-     * @var array
-     */
-    public function delete($id)
-    {
-        $contact = Contact::find($id);
-        if ($contact && $contact->user_id == auth()->user()->id) {
-            $contact->delete();
-            session()->flash('message', 'Company Deleted Successfully.');
-        } else {
-            $author = $contact ? $contact->user->name : 'Unknown';
-            session()->flash('message', 'Can Only Be Deleted by The Author. The Author is ' . $author);
-        }
     }
 }

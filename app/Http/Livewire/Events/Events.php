@@ -107,12 +107,13 @@ class Events extends Component
      */
     public function delete($id)
     {
-        $event = Event::where('user_id', auth()->user()->id)->find($id);
-        if($event != null){
+        $event = Event::find($id);
+        if ($event && $event->user_id == auth()->user()->id) {
             $event->delete();
-            session()->flash('message', 'Event Deleted Successfully.');
+            session()->flash('message', 'Company Deleted Successfully.');
+        } else {
+            $author = $event ? $event->user->name : 'Unknown';
+            session()->flash('message', 'Can Only Be Deleted by The Author. The Author is ' . $author);
         }
-        session()->flash('warning', 'Events can only be deleted by the creator');
-
     }
 }

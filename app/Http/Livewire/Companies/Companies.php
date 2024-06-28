@@ -124,11 +124,13 @@ class Companies extends Component
      */
     public function delete($id)
     {
-        $company = Company::where('user_id', auth()->user()->id)->find($id);
-        if($company != null){
+        $company = Company::find($id);
+        if ($company && $company->user_id == auth()->user()->id) {
             $company->delete();
             session()->flash('message', 'Company Deleted Successfully.');
+        } else {
+            $author = $company ? $company->user->name : 'Unknown';
+            session()->flash('message', 'Can Only Be Deleted by The Author. The Author is ' . $author);
         }
-        session()->flash('message', 'Can Only Be Deleted by The Author');
     }
 }
