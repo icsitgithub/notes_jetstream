@@ -285,9 +285,12 @@
                             <option value="" selected disabled>Select Option</option>
                             <option value="TA">Travel Agent</option>
                             <option value="TO">Tour Operator</option>
+                            <option value="TA - Virtuoso">TA - Virtuoso</option>
                             <option value="TO - Virtuoso">TO - Virtuoso</option>
                             <option value="ON CHECK">ON CHECK</option>
                             <option value="MICE">MICE</option>
+                            <option value="Signature">Signature</option>
+                            <option value="Traveller Made">Traveller Made</option>
                         </select>
                         <label for="business_source"
                             class="block mt-2 mb-2 text-sm font-medium text-gray-900 dark:text-gray-700">Business Source</label>

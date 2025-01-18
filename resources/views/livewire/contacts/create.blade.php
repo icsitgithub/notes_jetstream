@@ -32,6 +32,7 @@
                                 <option value="" selected disabled>Select Option</option>
                                 <option value="Mr.">Mr. </option>
                                 <option value="Mrs.">Mrs. </option>
+                                <option value="Ms.">Ms. </option>
                             </select>
                         </div>
                         <div class="mt-4 mb-4">
